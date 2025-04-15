@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.common.hardware;
 
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -23,106 +25,36 @@ public class RobotHardware {
     HardwareMap hwMap =  null;
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
+    public IMU imu;
     public DcMotor motorfl = null;
     public DcMotor motorfr = null;
     public DcMotor motorbr = null;
-
     public DcMotor motorbl = null;
 
-
-      public DcMotor liftArm = null;
-
-      public DcMotor launcher = null;
-
-    public CRServo misumiSlide = null;
-     public Servo grabberXtilt = null; // tilt servo horizontal
-     public Servo grabberX = null;
-
-     public Servo grabberYtilt; //tilt servo vertical (2nd stage)
-     public Servo grabberY = null;
-
-
-    //public Servo airplaneLauncher = null;
-
-    public IMU imu;
 
     // Initial robot orientation
     public YawPitchRollAngles orientation0;
     public AngularVelocity angularVelocity0;
     public double yaw0;
 
-    // Define a constructor that allows the OpMode to pass a reference to itself.
     public RobotHardware() {}
-
-    /**
-     * Initialize all the robot's hardware.
-     * This method must be called ONCE when the OpMode is initialized.
-     *
-     * All of the hardware devices are accessed via the hardware map, and initialized.
-     */
     public void init(HardwareMap ahwMap)    {
-        // save reference to hardware map
         hwMap = ahwMap;
 
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
-        motorfl = hwMap.get(DcMotor.class, "motorfl");
-        motorfr = hwMap.get(DcMotor.class, "motorfr");
-        motorbl = hwMap.get(DcMotor.class, "motorbl");
-        motorbr = hwMap.get(DcMotor.class, "motorbr");
-        //launcher = hwMap.get(DcMotor.class, "launcher");
+        motorfl = hwMap.get(DcMotor.class, "motor_left_front");
+        motorfr = hwMap.get(DcMotor.class, "motor_right_front");
+        motorbl = hwMap.get(DcMotor.class, "motor_left_back");
+        motorbr = hwMap.get(DcMotor.class, "motor_right_back");
 
-        liftArm = hwMap.get(DcMotor.class, "liftArm");
-        // Horizontal slide
-        misumiSlide = hwMap.get(CRServo.class, "misumiSlide");
-
-        grabberYtilt = hwMap.get(Servo.class, "grabberYtilt");
-        grabberY = hwMap.get(Servo.class, "grabberY");
-        grabberXtilt = hwMap.get(Servo.class, "grabberXtilt");
-        grabberX = hwMap.get(Servo.class, "grabberX");
-
-        // set Brake zero power behavior
         motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorbr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorbl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorfr.setDirection(DcMotor.Direction.REVERSE);
         motorbr.setDirection(DcMotor.Direction.REVERSE);
-      //  motorbl.setDirection(DcMotor.Direction.REVERSE);
-
-        // LiftArm motor reset
-//        liftArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        liftArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftArm.setPower(0);
-
-        misumiSlide.setPower(0);
-
-        //motorbr.setDirection(DcMotor.Direction.REVERSE);
 
 
-        // Define and initialize ALL installed servos.
-
-        //airplaneLauncher = hwMap.get(Servo.class, "feeder");
-        //tiltServoRight = hwMap.get(Servo.class, "tiltServoR");
-        //grabServoRight = hwMap.get(Servo.class, "grabServoR");
-        // tiltServoLeft = hwMap.get(Servo.class, "tiltServoL");
-        // grabServoLeft = hwMap.get(Servo.class, "grabServoL");
-        //autoPixel.setPosition(0.5);
-        //boardPixel.setPosition(0);
-        //grabServo.setPosition(0.4);
-
-        // Get distance sensors
-        //distanceR = hwMap.get(DistanceSensor.class, "distanceR");
-        //distanceL = hwMap.get(DistanceSensor.class, "distanceL");
-
-        // Set airplane launcher default servo position
-        //airplaneLauncher.setPosition(0);
-
-        // reverse motor directions
-        //motorbl.setDirection(DcMotor.Direction.REVERSE);
-        //motorfl.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         setDrivetrainMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
@@ -166,9 +98,6 @@ public class RobotHardware {
         motorfr.setMode(mode);
         motorbl.setMode(mode);
         motorbr.setMode(mode);
-    }
-    public void setArmsMode(DcMotor.RunMode mode) {
-        //linearSlider.setMode(mode);
     }
     public void setDriveForward(double fl, double fr, double bl, double br){
         if (fl > 1.0)
@@ -226,37 +155,6 @@ public class RobotHardware {
     }
 
     public void setAllDrivePower(double p){ setDrivePower(p,p,p,p);}
-    // public void setArmPower(double armPower){
-    //   linearSlider.setPower(armPower);
-    //}
-
-
-
-
-
 
 }
-/*
-   port 1 motorfl
-   port 2 motorbl
-   port 3 motorap
-   extension hub port 0 motorfr
-   extension hub port 1 motorbr
-   extension hub port 2 liftArm
-   extension hub port 3 liftHex
-
-   Servos
-   port 0 boardPixel
-   port 1 grabServo
-   port 2 tiltServo
-
-   extension hub port 0 autoPixel
-   extension hub port 1 feeder
-
-
-   //Controls//
-   Gamepad 1:
-
-     */
-
 
