@@ -30,6 +30,9 @@ public class RobotHardware {
     public DcMotor motorfr = null;
     public DcMotor motorbr = null;
     public DcMotor motorbl = null;
+    public DcMotor motorarm = null;
+    public Servo servoclaw = null;
+    public DcMotor motorlinearRail = null;
 
 
     // Initial robot orientation
@@ -46,6 +49,11 @@ public class RobotHardware {
         motorfr = hwMap.get(DcMotor.class, "motor_right_front");
         motorbl = hwMap.get(DcMotor.class, "motor_left_back");
         motorbr = hwMap.get(DcMotor.class, "motor_right_back");
+
+        motorarm = hwMap.get(DcMotor.class, "motor_arm");
+        motorlinearRail = hwMap.get(DcMotor.class, "motor_linear_rain");
+        servoclaw = hwMap.get(Servo.class, "claw");
+
 
         motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
