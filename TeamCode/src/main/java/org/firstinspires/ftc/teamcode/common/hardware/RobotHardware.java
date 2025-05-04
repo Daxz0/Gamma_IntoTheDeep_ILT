@@ -13,6 +13,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.robot.Robot;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -30,9 +32,12 @@ public class RobotHardware {
     public DcMotor motorfr = null;
     public DcMotor motorbr = null;
     public DcMotor motorbl = null;
-    public DcMotor motorarm = null;
-    public Servo servoclaw = null;
     public DcMotor motorlinearRail = null;
+    public Servo servoclaw = null;
+    public Servo servoarm = null;
+    public Servo servomisumi = null;
+    public Servo servorotateintake = null;
+    public CRServo servointake = null;
 
 
     // Initial robot orientation
@@ -49,11 +54,18 @@ public class RobotHardware {
         motorfr = hwMap.get(DcMotor.class, "motor_right_front");
         motorbl = hwMap.get(DcMotor.class, "motor_left_back");
         motorbr = hwMap.get(DcMotor.class, "motor_right_back");
+        motorlinearRail = hwMap.get(DcMotor.class, "motor_linear_rail");
 
-        motorarm = hwMap.get(DcMotor.class, "motor_arm");
-        motorlinearRail = hwMap.get(DcMotor.class, "motor_linear_rain");
-        servoclaw = hwMap.get(Servo.class, "claw");
+        servoarm = hwMap.get(Servo.class, "servo_arm");
+        servoclaw = hwMap.get(Servo.class, "servo_claw");
+        servomisumi = hwMap.get(Servo.class, "servo_misumi");
+        servointake = hwMap.get(CRServo.class, "servo_intake");
+        servorotateintake = hwMap.get(Servo.class, "servo_rotate_intake");
 
+
+        servorotateintake.setPosition(RobotConfig.INTAKE_DUMP_OUT);
+        servomisumi.setPosition(0.5);
+        servoarm.setPosition(RobotConfig.ARM_PICK_POSITION);
 
         motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -62,6 +74,9 @@ public class RobotHardware {
         motorfr.setDirection(DcMotor.Direction.REVERSE);
         motorbr.setDirection(DcMotor.Direction.REVERSE);
 
+
+        motorlinearRail.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorlinearRail.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         setDrivetrainMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
