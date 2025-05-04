@@ -6,8 +6,8 @@ public class RobotConfig {
 
     public static double ARM_PICK_POSITION = 0.23;
     public static double ARM_RELEASE_POSITION = 1;
-    public static double INTAKE_DUMP_IN = 0.58;
-    public static double INTAKE_DUMP_OUT = 0.4;
+    public static double INTAKE_DUMP_IN = 0.55;
+    public static double INTAKE_DUMP_OUT = 0.38;
     public static double CLAW_CLOSE = 1;
     public static double CLAW_OPEN = 0;
     public static double INTAKE_POWER = 5;

@@ -39,10 +39,12 @@ public class OpMode3 extends LinearOpMode {
         arm.setPosition(0);
         waitForStart();
 
-        double linear_rail_counter = 0;
+        final double LINEAR_RAIL_UPPER_LIMIT = -13000;
+        final double LINEAR_RAIL_LOWER_LIMIT = 5;
 
-        final double LINEAR_RAIL_UPPER_LIMIT = -8000;
-        final double LINEAR_RAIL_LOWER_LIMIT = 0;
+
+        double linear_rail_counter = LINEAR_RAIL_LOWER_LIMIT;
+
 
         while (opModeIsActive()) {
 
@@ -70,15 +72,11 @@ public class OpMode3 extends LinearOpMode {
                 }
                 else if (verticalMisumi < 0){
 
-                    if (misumi.getPosition() > 0.25){
-                        misumi.setPosition(1);
-                    }
+                    misumi.setPosition(0.9);
 
                 }
                 else{
-                    if (misumi.getPosition() > 0.95){
-                        misumi.setPosition(0.5);
-                    }
+                    misumi.setPosition(0.5);
                 }
             }
 
