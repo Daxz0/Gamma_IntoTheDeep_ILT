@@ -39,8 +39,8 @@ public class OpMode3 extends LinearOpMode {
         arm.setPosition(0);
         waitForStart();
 
-        final double LINEAR_RAIL_UPPER_LIMIT = -13000;
-        final double LINEAR_RAIL_LOWER_LIMIT = 5;
+        final double LINEAR_RAIL_UPPER_LIMIT = -18000;
+        final double LINEAR_RAIL_LOWER_LIMIT = 0;
 
 
         double linear_rail_counter = LINEAR_RAIL_LOWER_LIMIT;
@@ -52,17 +52,7 @@ public class OpMode3 extends LinearOpMode {
                 double verticalMisumi = gamepad1.right_stick_y;
                 double verticalLinear = gamepad1.left_stick_y * 0.6;
 
-                linear_rail_counter += verticalLinear;
-
-                if (linear_rail_counter > LINEAR_RAIL_LOWER_LIMIT) {
-                    linear_rail_counter = LINEAR_RAIL_LOWER_LIMIT;
-                    rail.setPower(0);
-                } else if (linear_rail_counter < LINEAR_RAIL_UPPER_LIMIT) {
-                    linear_rail_counter = LINEAR_RAIL_UPPER_LIMIT;
-                    rail.setPower(0);
-                } else {
-                    rail.setPower(verticalLinear);
-                }
+                rail.setPower(verticalLinear);
 
 
                 if (verticalMisumi > 0){
@@ -72,7 +62,7 @@ public class OpMode3 extends LinearOpMode {
                 }
                 else if (verticalMisumi < 0){
 
-                    misumi.setPosition(0.9);
+                    misumi.setPosition(1);
 
                 }
                 else{
@@ -95,6 +85,8 @@ public class OpMode3 extends LinearOpMode {
                 // 5 = servo_musumi
 
                 // --- CLAW TOGGLE ---
+                misumi.setPosition(0.5);
+                rail.setPower(0);
                 if (gamepad1.a) {
                     clawState = !clawState;
                     claw.setPosition(clawState ? RobotConfig.CLAW_CLOSE : RobotConfig.CLAW_OPEN);

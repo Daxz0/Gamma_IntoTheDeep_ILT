@@ -63,9 +63,10 @@ public class RobotHardware {
         servorotateintake = hwMap.get(Servo.class, "servo_rotate_intake");
 
 
+        servoarm.setPosition(RobotConfig.ARM_PICK_POSITION);
         servorotateintake.setPosition(RobotConfig.INTAKE_DUMP_OUT);
         servomisumi.setPosition(0.5);
-        servoarm.setPosition(RobotConfig.ARM_PICK_POSITION);
+        servoclaw.setPosition(RobotConfig.CLAW_OPEN);
 
         motorfr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorfl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
